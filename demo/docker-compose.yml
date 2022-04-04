@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  openrefine-authenticator:
+    build:
+      context: ./openrefine/
+      dockerfile: ./Dockerfile
+    container_name: openrefine-authenticator
+    network_mode: host
+    volumes:
+      - ./data:/or/data
+    ports:
+      - 3333:3333
+
+  login-app:
+    build:
+      context: ./login_app/
+      dockerfile: ./Dockerfile
+    container_name: login-app
+    volumes:
+      - ./data:/or/data
+      - ./openrefine/workspace-files:/or/files
+    ports:
+      - 8080:8080
+
+  allegrograph:
+    image: franzinc/agraph:latest
+    container_name: allegrograph
+    shm_size: 1g
+    ports:
+      - '10000-10035:10000-10035'
+    restart: unless-stopped
+    volumes:
+      - ./agraph/etc/:/agraph/etc/
+      - ./agraph/data/:/agraph/data/
+      - ./organisations.ttl:/agraph/lib/organisations.ttl
+    environment:
+      - AGRAPH_SUPER_USER=admin
+      - AGRAPH_SUPER_PASSWORD=pass
+    expose:
+      - 10035

@@ -1,0 +1,18 @@
+{
+  "auth_endpoint": "http://localhost:8080/api/login",
+  "auth_type_options": [
+    "username/password"
+  ],
+  "auth_type": "username/password",
+  "auth_token_type_options": [
+    "Bearer","Basic"
+  ],
+  "auth_token_type": "Bearer",
+  "auth_header_options": [
+    "Authorization","X-Auth"
+  ],
+  "auth_header": "Authorization",
+  "auth_username_property": "username",
+  "auth_password_property": "password",
+  "auth_token_property": "access_token"
+}
